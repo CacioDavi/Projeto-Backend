@@ -16,7 +16,7 @@ tokenAuthorize: async (req, res, next) =>  {
       
       jwt.verify(bearerToken, secret, (err, decoded) => {
         if (err) {
-          return res.status(403).json({ message: 'O token está inválido.' });
+          return res.status(401).json({ message: 'O token está inválido.' });
         }
         req.userInfo = decoded;
       });

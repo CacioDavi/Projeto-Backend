@@ -1,7 +1,7 @@
 
 const AppError = require("../config/AppError");
 const User = require("../models/UserModel");
-
+const bcrypt = require("bcrypt");
 
 class UserService {
 
@@ -52,6 +52,50 @@ class UserService {
 
         
         return {message: "Usuário criado com sucesso!"};
+    }
+
+    async updateUser(id, data) {
+        const { firstname, surname, email } = data;
+
+        if (!firstname || !surname || !email) {
+            throw new AppError("Todos os campos são obrigatórios.");
+        }
+
+        // Verifica se o usuário existe
+        const user = await User.findByPk(id);
+
+        if (!user) {
+            throw new AppError("Usuário não encontrado.", 404);
+        }
+
+        // Verifica se o e-mail já está sendo utilizado por outro usuário
+        const emailAlreadyExists = await User.findOne({
+            where: {
+                email,
+                id: { [require("sequelize").Op.ne]: id }
+            }
+        });
+
+        if (emailAlreadyExists) {
+            throw new AppError("Este e-mail é inválido para uso no sistema.");
+        }
+
+        
+        await user.update({
+            firstname,
+            surname,
+            email
+        });
+    }
+
+    async deleteUser(id) {
+        const user = await User.findByPk(id);
+
+        if (!user) {
+            throw new AppError("Usuário não encontrado.", 404);
+        }
+
+        await user.destroy();
     }
 
 }
