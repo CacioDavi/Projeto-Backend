@@ -1,19 +1,25 @@
-import express from'express';
-import { GetUser } from './controllers/UserController.js';
+
+require("dotenv").config();
+
+const express = require("express");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+
+const routes = require("./routes/routes");
+
 const app = express();
 
-app.use(express.json())
+app.use(
+    cors({
+        origin: process.env.CORS_ORIGIN,
+        credentials: true,
+    })
+);
 
-app.get('/', (req, res) => {
-  res.statusCode = 200;
-  res.type('aplication/json')
-  res.json({
-    title: "Here is running a API",
-    description: "access my resources"
-  })
-})
 
-app.route("/v1/users/:id")
-.get(GetUser)
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-export default app;
+app.use(routes);
+
+module.exports = app;

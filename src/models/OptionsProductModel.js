@@ -1,0 +1,49 @@
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/ConnectionDB");
+
+const OptionsProduct = sequelize.define(
+  "OptionsProduct",
+  {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true,
+    },
+    product_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'product',
+        key: 'id'
+      }
+    },
+    title: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    shape: {
+      type: DataTypes.ENUM("square", "circle"),
+      allowNull: true,
+      defaultValue: "square"
+    },
+    radius: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      defaultValue: 0
+    },
+    type: {
+      type: DataTypes.ENUM("text", "color"),
+      allowNull: true,
+      defaultValue: "text"
+    },
+    values: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+  },
+  {
+    tableName: "optionsProduct",
+  }
+);
+
+module.exports = OptionsProduct;
