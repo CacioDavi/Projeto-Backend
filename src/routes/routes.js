@@ -5,6 +5,7 @@ const auth = require("../config/AuthotizeRoutes");
 const multer = require("multer");
 
 const UserController = require("../controllers/UserController");
+const CategoryController = require("../controllers/CategoryController");
 
 
 router.use(limiter);
@@ -16,6 +17,9 @@ router.put("/v1/user/:id", auth.tokenAuthorize, UserController.updateUser);
 router.delete("/v1/user/:id",auth.tokenAuthorize,  UserController.deleteUser);
 
 //Endpoint Categoria
+router.post("/v1/category", CategoryController.createCategory);
+router.get("/v1/category/search", CategoryController.getAllCategories);
+router.get("/v1/category/:id", CategoryController.getCategoryById);
 
 //Endepoint Produtos
 
