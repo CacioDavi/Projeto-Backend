@@ -4,7 +4,7 @@ const trueBool = [1, true, "true", "1"];
 
 class Bool {
     static isBool(x) {
-        const arg = x?.toLowerCase();
+        const arg = typeof x == "string" ? x?.toLowerCase() : x;
         const result = bool.includes(arg);
         return result;
     }

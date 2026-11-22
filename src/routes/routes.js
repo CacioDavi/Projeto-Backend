@@ -20,6 +20,8 @@ router.delete("/v1/user/:id",auth.tokenAuthorize,  UserController.deleteUser);
 router.post("/v1/category", CategoryController.createCategory);
 router.get("/v1/category/search", CategoryController.getAllCategories);
 router.get("/v1/category/:id", CategoryController.getCategoryById);
+router.put("/v1/category/:id", CategoryController.updateCategory);
+router.delete("/v1/category/:id", CategoryController.deleteCategory);
 
 //Endepoint Produtos
 
