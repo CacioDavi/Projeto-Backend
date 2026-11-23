@@ -111,6 +111,160 @@ Se todas as configurações estiverem corretas, o servidor será iniciado e esta
 - Em caso de erro na conexão, confira o host, a porta, o usuário e a senha do MySQL.
 - Não crie as tabelas manualmente: essa responsabilidade é do Sequelize.
 
+<hr>
 
-Desenvolvido em conjunto por: Cácio Davi e Daniel Alves
-Projeto por: Geração Tech
+# Documentação da API
+
+Esta documentação apresenta os endpoints disponíveis na API para gerenciamento de usuários e categorias, incluindo seus métodos HTTP, descrições e parâmetros necessários para cada operação.
+
+## 1. Usuários
+
+Os endpoints de usuários permitem realizar operações de consulta, cadastro, atualização e exclusão de usuários.
+
+### Endpoints
+
+| Método HTTP | Endpoint | Descrição |
+|---|---|---|
+| GET | `/v1/user/:id` | Busca e exibe as informações de um usuário cadastrado. |
+| POST | `/v1/user` | Cria um novo usuário. |
+| PUT | `/v1/user/:id` | Atualiza os dados de um usuário cadastrado. |
+| DELETE | `/v1/user/:id` | Exclui um usuário cadastrado. |
+
+### Parâmetros
+
+**GET `/v1/user/:id`**
+
+- `id`: Identificador do usuário que será consultado.
+
+**POST `/v1/user`**
+
+Cria um novo usuário.
+
+Parâmetros enviados no corpo (*body*) da requisição:
+
+- `firstname`: Primeiro nome do usuário.
+- `surname`: Sobrenome do usuário.
+- `email`: E-mail do usuário.
+- `password`: Senha do usuário.
+- `confirmPassword`: Confirmação da senha do usuário.
+
+**PUT `/v1/user/:id`**
+
+Atualiza os dados de um usuário cadastrado.
+
+Parâmetros:
+
+- `id`: Identificador do usuário que será atualizado.
+- `firstname`: Primeiro nome do usuário.
+- `surname`: Sobrenome do usuário.
+- `email`: E-mail do usuário.
+- `password`: Nova senha do usuário.
+- `confirmPassword`: Confirmação da nova senha.
+
+**DELETE `/v1/user/:id`**
+
+- `id`: Identificador do usuário que será excluído.
+
+---
+
+## 2. Categorias
+
+Os endpoints de categorias permitem realizar operações de consulta, cadastro, atualização e exclusão de categorias.
+
+### Endpoints
+
+| Método HTTP | Endpoint | Descrição |
+|---|---|---|
+| GET | `/v1/category/:id` | Busca e exibe as informações de uma categoria cadastrada. |
+| GET | `/v1/category/search` | Lista as categorias cadastradas, permitindo filtrar e paginar os resultados. |
+| POST | `/v1/category` | Cria uma nova categoria. |
+| PUT | `/v1/category/:id` | Atualiza os dados de uma categoria cadastrada. |
+| DELETE | `/v1/category/:id` | Exclui uma categoria cadastrada. |
+
+### Parâmetros
+
+**GET `/v1/category/:id`**
+
+- `id`: Identificador da categoria que será consultada.
+
+**GET `/v1/category/search`**
+
+Permite consultar as categorias cadastradas, com opções de paginação e filtragem.
+
+Parâmetros de consulta (*query parameters*):
+
+- `limit`: Quantidade de categorias exibidas por página. O valor `-1` exibe todas as categorias e é o valor padrão.
+- `page`: Número da página dos resultados. Valor padrão: `1`.
+- `fields`: Define quais campos da categoria serão exibidos.
+- `use_in_menu`: Permite filtrar as categorias de acordo com sua exibição no menu.
+
+**Exemplo de utilização:**
+
+```http
+GET /v1/category/search?limit=10&page=1&use_in_menu=true
+```
+
+**POST `/v1/category`**
+
+Cria uma nova categoria.
+
+Parâmetros enviados no corpo (*body*) da requisição:
+
+- `name`: Nome da categoria.
+- `slug`: Identificador textual da categoria utilizado na URL.
+- `use_in_menu`: Define se a categoria será exibida no menu.
+
+**PUT `/v1/category/:id`**
+
+Atualiza os dados de uma categoria cadastrada.
+
+Todos os parâmetros abaixo são obrigatórios na requisição:
+
+- `id`: Identificador da categoria que será atualizada.
+- `name`: Novo nome da categoria.
+- `slug`: Novo identificador textual da categoria.
+- `use_in_menu`: Define se a categoria será exibida no menu.
+
+**DELETE `/v1/category/:id`**
+
+- `id`: Identificador da categoria que será excluída.
+
+---
+
+## 3. Autenticação
+
+Alguns endpoints exigem autenticação por token para permitir o acesso.
+
+As seguintes rotas possuem proteção por autenticação:
+
+| Método HTTP | Endpoint |
+|---|---|
+| PUT | `/v1/user/:id` |
+| DELETE | `/v1/user/:id` |
+
+Para acessar essas rotas, é necessário enviar um token válido na requisição.
+
+---
+
+## 4. Observações gerais
+
+- Os parâmetros `:id` são informados diretamente na URL da requisição.
+- Os parâmetros de consulta (`limit`, `page`, `fields` e `use_in_menu`) são enviados pela *query string*.
+- Os dados de criação e atualização são enviados no corpo (*body*) da requisição.
+- As rotas de atualização e exclusão de usuários exigem autenticação por token.
+- As demais rotas listadas não possuem o middleware de autenticação indicado na configuração dos endpoints.
+
+---
+
+<blockquote>
+    <em>
+        Desenvolvido em conjunto por: 
+        <a href="https://github.com/CacioDavi">Cácio Davi</a>, 
+        <a href="https://github.com/Florentino2004">Tino Neto</a>,  e 
+        <a href="https://github.com/DanielAlves21">Daniel Alves</a>
+    </em>
+    <p>
+        Projeto por: 
+        <a href="https://geracaotech.iel-ce.org.br">Geração Tech</a>
+    </p>
+</blockquote>
