@@ -110,3 +110,7 @@ Se todas as configurações estiverem corretas, o servidor será iniciado e esta
 - Confirme se o banco de dados informado em `DB_NAME` existe.
 - Em caso de erro na conexão, confira o host, a porta, o usuário e a senha do MySQL.
 - Não crie as tabelas manualmente: essa responsabilidade é do Sequelize.
+
+
+Desenvolvido em conjunto por: Cácio Davi e Daniel Alves
+Projeto por: Geração Tech
